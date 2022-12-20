@@ -46,4 +46,12 @@ class ClamCardTest extends TestCase
         $this->assertEquals($expectedPrice, $journey);
     }
 
+
+    public function testMultipleJourneysInZoneA()
+    {
+        $expectedPrice = '7.00';
+        $journey = $this->clamCard->getJourneyPrice(['Asterisk', 'Amersham', 'Aldgate','Anerley']);
+
+        $this->assertEquals($expectedPrice, $journey);
+    }
 }

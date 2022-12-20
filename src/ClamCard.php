@@ -20,7 +20,7 @@ class ClamCard
   }
 
 
-  public function getJourneyPrice(string $fromStation, $toStation)
+  public function getJourneyPrice(array $stations)
   {
      $startingFromZone = [];
      $arrivingAtZone = [];
@@ -28,28 +28,54 @@ class ClamCard
 
      $travelZone = $this->travelZone;
 
-     foreach($travelZone as $key => $value){
-      foreach($value as $val){
-         if($fromStation === $val){
+     $arrayOfStations = $this->formatStations($stations);
+     
+    //  iterate through each array and save the zones in starting from and arriving at arrays
+    // add to the count for each array 
+    foreach($arrayOfStations as $stations){
+     foreach($travelZone as $key => $value){ 
+          if(in_array($stations[0], $value)){
           $startingFromZone[] = $key;
-        } if($toStation === $val){
+        } if(in_array($stations[1], $value)){
           $arrivingAtZone[] = $key;
         }  
       } 
       $count++; 
     }
     
-    if($count == 2 && $startingFromZone === $arrivingAtZone)
+    if($count == 1 && $startingFromZone === $arrivingAtZone)
     {
       $journeyPrice = $this->travelFares[$startingFromZone[0]]["single"];
     } 
-    elseif($count == 2 && $startingFromZone != $arrivingAtZone)
+    elseif($count == 1 && $startingFromZone != $arrivingAtZone)
     {
       $journeyPrice = $this->travelFares["zoneB"]["single"];
+    }
+    elseif($count > 1 && $startingFromZone === $arrivingAtZone)
+    {
+      $journeyPrice = $this->travelFares[$startingFromZone[0]]["day"];
+    }
+    else
+    {
+      $journeyPrice = $this->travelFares["zoneB"]["day"];
     }
 
     return $journeyPrice;
   
+  }
+
+
+  private function formatStations(array $stations)
+  {
+    if(count($stations) == 2)
+    {
+      $arrayOfStations = $stations;
+    } elseif(count($stations) > 2 && count($stations) % 2 == 0)
+    {
+      $arrayOfStations = array_chunk($stations, 2);
+    }
+
+    return $arrayOfStations;
   }
 
 }
