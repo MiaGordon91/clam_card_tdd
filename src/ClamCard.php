@@ -43,6 +43,30 @@ class ClamCard
       $count++; 
     }
     
+    $journeyPrice = $this->calculateRate($count,$startingFromZone,$arrivingAtZone);
+    
+    return $journeyPrice;
+  
+  }
+
+
+  private function formatStations(array $stations)
+  {
+    if(count($stations) == 2)
+    {
+      $arrayOfStations = $stations;
+    } elseif(count($stations) > 2 && count($stations) % 2 == 0)
+    {
+      $arrayOfStations = array_chunk($stations, 2);
+    }
+
+    return $arrayOfStations;
+  }
+
+
+  private function calculateRate($count, $startingFromZone, $arrivingAtZone)
+  {
+
     if($count == 1 && $startingFromZone === $arrivingAtZone)
     {
       $journeyPrice = $this->travelFares[$startingFromZone[0]]["single"];
@@ -61,21 +85,7 @@ class ClamCard
     }
 
     return $journeyPrice;
-  
-  }
 
-
-  private function formatStations(array $stations)
-  {
-    if(count($stations) == 2)
-    {
-      $arrayOfStations = $stations;
-    } elseif(count($stations) > 2 && count($stations) % 2 == 0)
-    {
-      $arrayOfStations = array_chunk($stations, 2);
-    }
-
-    return $arrayOfStations;
   }
 
 }
