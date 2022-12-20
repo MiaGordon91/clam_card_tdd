@@ -24,7 +24,7 @@ class ClamCardTest extends TestCase
     public function testZoneASingleRateIsReturned()
     {
         $expectedPrice = '2.50';
-        $journey = $this->clamCard->getJourneyPrice('Asterisk', 'Aldgate');
+        $journey = $this->clamCard->getJourneyPrice(['Asterisk', 'Aldgate']);
         
         $this->assertEquals($expectedPrice, $journey); 
 
@@ -33,7 +33,7 @@ class ClamCardTest extends TestCase
     public function testZoneASingleJourneyDoesntReturnZoneBDayJourney()
     {
         $notExpectedPrice = '8.00';
-        $journey = $this->clamCard->getJourneyPrice('Amersham', 'Aldgate');
+        $journey = $this->clamCard->getJourneyPrice(['Amersham', 'Aldgate']);
         
         $this->assertNotEquals($notExpectedPrice, $journey);
     }
@@ -41,7 +41,7 @@ class ClamCardTest extends TestCase
     public function testZoneAtoZoneBSingleJourneyReturnsCorrectRate()
     {
         $expectedPrice = '3.00';
-        $journey =  $this->clamCard->getJourneyPrice('Aldgate', 'Balham');
+        $journey =  $this->clamCard->getJourneyPrice(['Aldgate', 'Balham']);
 
         $this->assertEquals($expectedPrice, $journey);
     }
@@ -50,8 +50,10 @@ class ClamCardTest extends TestCase
     public function testMultipleJourneysInZoneA()
     {
         $expectedPrice = '7.00';
-        $journey = $this->clamCard->getJourneyPrice(['Asterisk', 'Amersham', 'Aldgate','Anerley']);
+        $journey = $this->clamCard->getJourneyPrice(['Asterisk', 'Amersham', 'Aldgate','Anerley', 'Angel', 'Anerley']);
 
         $this->assertEquals($expectedPrice, $journey);
     }
+    
+    
 }

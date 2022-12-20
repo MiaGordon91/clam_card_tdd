@@ -30,8 +30,7 @@ class ClamCard
 
      $arrayOfStations = $this->formatStations($stations);
      
-    //  iterate through each array and save the zones in starting from and arriving at arrays
-    // add to the count for each array 
+    
     foreach($arrayOfStations as $stations){
      foreach($travelZone as $key => $value){ 
           if(in_array($stations[0], $value)){
@@ -42,7 +41,7 @@ class ClamCard
       } 
       $count++; 
     }
-    
+
     $journeyPrice = $this->calculateRate($count,$startingFromZone,$arrivingAtZone);
     
     return $journeyPrice;
@@ -54,12 +53,12 @@ class ClamCard
   {
     if(count($stations) == 2)
     {
-      $arrayOfStations = $stations;
+      $arrayOfStations = [$stations];
     } elseif(count($stations) > 2 && count($stations) % 2 == 0)
     {
       $arrayOfStations = array_chunk($stations, 2);
     }
-
+  
     return $arrayOfStations;
   }
 
