@@ -27,6 +27,8 @@ class ClamCard
      $count = 0;
 
      $travelZone = $this->travelZone;
+     $travelFares = $this->travelFares;
+    
      
      if(count($stations) % 2 != 0)
      {
@@ -35,6 +37,7 @@ class ClamCard
 
      $arrayOfStations = $this->formatStations($stations);
      
+     $journeyPrices = [];
     
     foreach($arrayOfStations as $stations){
      foreach($travelZone as $key => $value){ 
@@ -45,11 +48,15 @@ class ClamCard
         }  
       } 
       $count++; 
+      $journeyPrices[] = $this->calculateRatePerJourney($count,$startingFromZone,$arrivingAtZone);
     }
 
-    $journeyPrice = $this->calculateRate($count,$startingFromZone,$arrivingAtZone);
-    
-    return $journeyPrice;
+   if($count > 1 && (array_sum($journeyPrices) > $travelFares[$startingFromZone[0]]["day"]))
+    {   
+      return $this->travelFares[$startingFromZone[0]]["day"];
+    } else {
+      return $journeyPrices;
+    }
   
   }
 
@@ -68,24 +75,18 @@ class ClamCard
   }
 
 
-  private function calculateRate($count, $startingFromZone, $arrivingAtZone)
+  private function calculateRatePerJourney($count, $startingFromZone, $arrivingAtZone)
   {
 
-    if($count == 1 && $startingFromZone === $arrivingAtZone)
+    $journeyPrice = [];
+
+    if($startingFromZone === $arrivingAtZone)
     {
-      $journeyPrice = $this->travelFares[$startingFromZone[0]]["single"];
+      $journeyPrice[] = $this->travelFares[$startingFromZone[0]]["single"];
     } 
-    elseif($count == 1 && $startingFromZone != $arrivingAtZone)
+    elseif($startingFromZone != $arrivingAtZone)
     {
-      $journeyPrice = $this->travelFares["zoneB"]["single"];
-    }
-    elseif($count > 1 && $startingFromZone === $arrivingAtZone)
-    {
-      $journeyPrice = $this->travelFares[$startingFromZone[0]]["day"];
-    }
-    else
-    {
-      $journeyPrice = $this->travelFares["zoneB"]["day"];
+      $journeyPrice[] = $this->travelFares["zoneB"]["single"];
     }
 
     return $journeyPrice;

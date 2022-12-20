@@ -23,6 +23,8 @@ And a further $3.00 for his second journey
 
 
 
+Setup - git clone repo & run composer require --dev phpunit/phpunit 
+
 To run the test class/folder please copy and paste the following and replace the placeholder with the test name
 
 'php vendor/bin/phpunit tests/ClamCardTest.php' 
