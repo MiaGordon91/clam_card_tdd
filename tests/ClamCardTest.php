@@ -29,4 +29,5 @@ class ClamCardTest extends TestCase
         $this->assertEquals($expectedPrice, $singleRatePrice); 
 
     }
+
 }

@@ -31,21 +31,13 @@ class ClamCard
       foreach($value as $val){
          if($fromStation === $val){
           $startingFromZone[] = $key;
+        } if($toStation === $val){
+          $arrivingAtZone[] = $key;
         }  
       }  
-
-      foreach($travelZone as $key => $value){
-        foreach($value as $val){
-           if($toStation === $val){
-            $arrivingAtZone[] = $key;
-          }  
-        }  
-
     }
-
      return $startingFromZone === $arrivingAtZone ? $this->travelFares[$startingFromZone[0]]["single"] : null;
-    
+  
   }
-}
 
 }

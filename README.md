@@ -25,11 +25,11 @@ And a further $3.00 for his second journey
 
 To run the test class/folder please copy and paste the following and replace the placeholder with the test name
 
-'php vendor/bin/phpunit tests/xxxx.php' 
+'php vendor/bin/phpunit tests/ClamCardTest.php' 
 
 Alternatively, if you would like to run individual tests please type the following
 
-'php vendor/bin/phpunit tests/xxx.php --filter [testName]'
+'php vendor/bin/phpunit tests/ClamCardTest.php --filter [testName]'
 
 
 Notes
