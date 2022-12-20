@@ -21,13 +21,21 @@ class ClamCardTest extends TestCase
 
 
     // test Michaels journey returns correct single rate
-    public function testSingleRateIsReturnedCorrectly()
+    public function testZoneASingleRateIsReturned()
     {
         $expectedPrice = '2.50';
         $singleRatePrice = $this->clamCard->getJourneyPrice('Asterisk', 'Aldgate');
         
         $this->assertEquals($expectedPrice, $singleRatePrice); 
 
+    }
+
+    public function testZoneASingleJourneyDoesntReturnZoneBDayJourney()
+    {
+        $notExpectedPrice = '8.00';
+        $singleRatePrice = $this->clamCard->getJourneyPrice('Amersham', 'Aldgate');
+        
+        $this->assertNotEquals($notExpectedPrice, $singleRatePrice);
     }
 
 }

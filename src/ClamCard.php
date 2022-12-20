@@ -24,6 +24,7 @@ class ClamCard
   {
      $startingFromZone = [];
      $arrivingAtZone = [];
+     $count = 0;
 
      $travelZone = $this->travelZone;
 
@@ -34,9 +35,13 @@ class ClamCard
         } if($toStation === $val){
           $arrivingAtZone[] = $key;
         }  
-      }  
+      } 
+      $count++; 
     }
-     return $startingFromZone === $arrivingAtZone ? $this->travelFares[$startingFromZone[0]]["single"] : null;
+    
+    if($count == 2){
+      return $startingFromZone === $arrivingAtZone ? $this->travelFares[$startingFromZone[0]]["single"] : null;
+    }
   
   }
 
