@@ -39,9 +39,16 @@ class ClamCard
       $count++; 
     }
     
-    if($count == 2){
-      return $startingFromZone === $arrivingAtZone ? $this->travelFares[$startingFromZone[0]]["single"] : null;
+    if($count == 2 && $startingFromZone === $arrivingAtZone)
+    {
+      $journeyPrice = $this->travelFares[$startingFromZone[0]]["single"];
+    } 
+    elseif($count == 2 && $startingFromZone != $arrivingAtZone)
+    {
+      $journeyPrice = $this->travelFares["zoneB"]["single"];
     }
+
+    return $journeyPrice;
   
   }
 
