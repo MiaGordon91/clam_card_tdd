@@ -10,7 +10,7 @@ class ClamCardTest extends TestCase
         $this->clamCard = new ClamCard();
     }
 
-    // test that travel zone is set 
+    
     public function testTravelZonesAreSet()
     {
         $expectedResult = ['Asterisk', 'Amersham', 'Aldgate', 'Angel', 'Anerley'];
@@ -19,8 +19,6 @@ class ClamCardTest extends TestCase
         $this->assertEquals($expectedResult, $ZoneAStations);
     }
 
-
-    // test Michaels journey returns correct single rate
     public function testZoneASingleRateIsReturned()
     {
         $expectedPrice = '2.50';
@@ -54,6 +52,15 @@ class ClamCardTest extends TestCase
 
         $this->assertEquals($expectedPrice, $journey);
     }
-    
+
+
+    // Edge case
+    public function testErrorIsThrownIfTheresAnUncompletedJourney()
+    {
+        $invalidJourney = ['Bison', 'Bugel', 'Balham'];
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->clamCard->getJourneyPrice($invalidJourney);
+    }
     
 }

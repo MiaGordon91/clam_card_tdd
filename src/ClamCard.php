@@ -27,6 +27,11 @@ class ClamCard
      $count = 0;
 
      $travelZone = $this->travelZone;
+     
+     if(count($stations) % 2 != 0)
+     {
+      throw new \InvalidArgumentException('You must complete a journey to calculate the price');
+     }
 
      $arrayOfStations = $this->formatStations($stations);
      
@@ -54,11 +59,11 @@ class ClamCard
     if(count($stations) == 2)
     {
       $arrayOfStations = [$stations];
-    } elseif(count($stations) > 2 && count($stations) % 2 == 0)
+    } elseif (count($stations) > 2 && count($stations) % 2 == 0)
     {
       $arrayOfStations = array_chunk($stations, 2);
-    }
-  
+    } 
+
     return $arrayOfStations;
   }
 
