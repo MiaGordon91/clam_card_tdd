@@ -55,7 +55,7 @@ class ClamCardTest extends TestCase
 
     public function testMultipleJourneysAcrossBothZones()
     {
-        $expectedJourneyPrices = [['2.50'] ,['3.00']];
+        $expectedJourneyPrices = '5.50';
 
         $journey = $this->clamCard->getJourneyPrice(['Asterisk', 'Aldgate','Asterisk', 'Balham']);
         

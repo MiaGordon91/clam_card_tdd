@@ -58,7 +58,7 @@ class ClamCard
       $journeyTotal = $this->calculateDayRateForZone(array_merge(...$singleJourneyRates));
       return $journeyTotal;
     } else {
-      $journeyTotal = implode(" ", $journeyPrices[0]);
+      $journeyTotal = implode(" ", $singleJourneyRates[0]);
       return $journeyTotal;
     }
   
