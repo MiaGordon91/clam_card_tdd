@@ -85,15 +85,9 @@ class ClamCard
 
     $journeyPrice = [];
 
-    if($startingFromZone === $arrivingAtZone)
-    {
-      $journeyPrice[] = $this->travelFares[$startingFromZone[0]]["single"];
-    } 
-    elseif($startingFromZone != $arrivingAtZone)
-    {
-      $journeyPrice[] = $this->travelFares["zoneB"]["single"];
-    }
-
+    $startingFromZone === $arrivingAtZone ? $journeyPrice[] = $this->travelFares[$startingFromZone[0]]["single"] :
+    $journeyPrice[] = $this->travelFares["zoneB"]["single"];
+    
     return $journeyPrice;
 
   }
