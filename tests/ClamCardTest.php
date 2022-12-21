@@ -74,4 +74,3 @@ class ClamCardTest extends TestCase
 
 }
     
-// need to fix older test cases after changing logic 
