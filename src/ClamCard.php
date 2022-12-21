@@ -37,7 +37,7 @@ class ClamCard
 
      $arrayOfStations = $this->formatStations($stations);
      
-     $journeyPrices = [];
+     $singleJourneyRates = [];
     
     foreach($arrayOfStations as $stations){
      foreach($travelZone as $key => $value){ 
@@ -48,17 +48,22 @@ class ClamCard
         }  
       } 
       $count++; 
-      $journeyPrices[] = $this->calculateRatePerJourney($count,$startingFromZone,$arrivingAtZone);
+      $singleJourneyRates[] = $this->calculateRatePerJourney($count,$startingFromZone,$arrivingAtZone);
     }
+  
 
-   if($count > 1 && (array_sum($journeyPrices) > $travelFares[$startingFromZone[0]]["day"]))
+   if($count > 1)
     {   
-      return $this->travelFares[$startingFromZone[0]]["day"];
+      
+      $journeyTotal = $this->calculateDayRateForZone(array_merge(...$singleJourneyRates));
+      return $journeyTotal;
     } else {
-      return $journeyPrices;
+      $journeyTotal = implode(" ", $journeyPrices[0]);
+      return $journeyTotal;
     }
   
   }
+
 
 
   private function formatStations(array $stations)
@@ -93,4 +98,52 @@ class ClamCard
 
   }
 
-}
+
+  private function calculateDayRateForZone($singleJourneyRates)
+  {
+
+    $zoneASingleRate = $this->travelFares['zoneA']['single'];
+    $zoneBSingleRate = $this->travelFares['zoneB']['single'];
+    
+    $zoneADayRate = $this->travelFares['zoneA']['day'];
+    $zoneBDayRate = $this->travelFares['zoneB']['day'];
+    
+
+    $totalOfSingleJourneys = array_sum($singleJourneyRates);
+
+
+      if(in_array($zoneASingleRate, $singleJourneyRates) && in_array($zoneBSingleRate, $singleJourneyRates))
+      { 
+        $sumOfJourney = array_sum($singleJourneyRates);
+
+        if($sumOfJourney > $zoneADayRate){
+          $journeyTotal = $zoneBDayRate;
+        } else {
+          return $sumOfJourney;
+        }
+      } elseif (!in_array($zoneASingleRate, $singleJourneyRates) && $totalOfSingleJourneys > $zoneBDayRate)
+      {
+        return $zoneBDayRate;
+
+      } elseif(!in_array($zoneASingleRate, $singleJourneyRates) && $totalOfSingleJourneys < $zoneBDayRate) 
+      {
+        return $totalOfSingleJourneys;
+
+      } elseif(!in_array($zoneBSingleRate, $singleJourneyRates) && $totalOfSingleJourneys > $zoneADayRate) 
+      {
+        
+        return $zoneADayRate;
+
+      } elseif(!in_array($zoneBSingleRate, $singleJourneyRates) && $totalOfSingleJourneys < $zoneADayRate) 
+      {
+        return $totalOfSingleJourneys;
+
+      } 
+
+    }
+    
+    
+  }
+
+  
+

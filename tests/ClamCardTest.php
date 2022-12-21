@@ -48,7 +48,7 @@ class ClamCardTest extends TestCase
     public function testMultipleJourneysInZoneA()
     {
         $expectedPrice = '7.00';
-        $journey = $this->clamCard->getJourneyPrice(['Asterisk', 'Amersham', 'Aldgate','Anerley', 'Angel', 'Anerley']);
+        $journey = $this->clamCard->getJourneyPrice(['Asterisk', 'Amersham', 'Amersham','Anerley', 'Anerley', 'Angel']);
 
         $this->assertEquals($expectedPrice, $journey);
     }
@@ -71,5 +71,7 @@ class ClamCardTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->clamCard->getJourneyPrice($invalidJourney);
     }
-    
+
 }
+    
+// need to fix older test cases after changing logic 
